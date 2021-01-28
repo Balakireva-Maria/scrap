@@ -6,17 +6,17 @@ soup = BeautifulSoup(requests.get(url).text, 'html.parser')
 hubs_list = []
 
 for article in (soup.find_all('article', class_='post')):
-    hubs_list.append((article.find('a', class_='hub-link').text.lower()))
+     hubs_list.append((article.text.lower().split(' ')))
+
 
 
 for word in keywords:
-    if word in hubs_list:
-        time = article.find('span', class_='post__time').text
-        title = article.find('h2', class_='post__title').text
-        link = article.find('a', class_='post__title_link').get('href')
-        print(f' {time} - {title} - {link}')
-
-
+    for hub in hubs_list:
+        if word in hub:
+            time = article.find('span', class_='post__time').text
+            title = article.find('h2', class_='post__title').text
+            link = article.find('a', class_='post__title_link').get('href')
+            print(f' {time} - {title} - {link}')
 
 
 
